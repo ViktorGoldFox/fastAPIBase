@@ -6,7 +6,7 @@ class ApiSetting(BaseSettings):
     port: int = 8000 #Port of place App
 
 class DBSetting(BaseSettings):
-    db_path: str = 'dataBase.db' # Path to DataBase file example: DataBase.db (sqlite3)
+    db_path: str = 'database.db' # Path to DataBase file example: DataBase.db (sqlite3)
     url: str = f'sqlite+aiosqlite:///{db_path}' # Select lib of the db
     echo: bool = False # DataBase logs
     autoflush: bool = False #automatic flush call which occurs
