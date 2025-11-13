@@ -1,8 +1,8 @@
 from sqlalchemy import select, update, delete, Result
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from database.models import *
-from untities import *
+from DataBase.models import *
+from Schemes import *
 
 
 async def get_all_product(session: AsyncSession):
