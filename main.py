@@ -20,15 +20,20 @@ async def lifespan(app: FastAPI):
 
     print("uvicorn is stopping...")
 
-main_app = FastAPI(lifespan=lifespan)
-main_app.include_router(products, prefix='/api', tags=['Products'])
 
-@main_app.get('/ping', tags=['Main'])
+main_app = FastAPI(lifespan=lifespan)
+main_app.include_router(products, prefix="/api", tags=["Products"])
+
+
+@main_app.get("/ping", tags=["Main"])
 def get_ping():
     return {"code": 200, "ping": True}
 
-if __name__ == '__main__':
-    uvicorn.run('main:main_app',
-                reload=core_config.api.reload,
-                host=core_config.api.host,
-                port=core_config.api.port)
+
+if __name__ == "__main__":
+    uvicorn.run(
+        "main:main_app",
+        reload=core_config.api.reload,
+        host=core_config.api.host,
+        port=core_config.api.port,
+    )
