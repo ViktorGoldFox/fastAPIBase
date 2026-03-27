@@ -1,20 +1,20 @@
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker,async_scoped_session
 
-from Core import core_config
+from Core import settings
 from asyncio import current_task
 
 
 class DB:
     def __init__(self):
         self.engine = create_async_engine(
-            url=core_config.db.url,
-            echo=core_config.db.echo
+            url=settings.db.url,
+            echo=settings.db.echo
         )
 
         self.session_maker = async_sessionmaker(
             bind=self.engine,
-            autoflush=core_config.db.autoflush,
-            expire_on_commit=core_config.db.expire_on_commit
+            autoflush=settings.db.autoflush,
+            expire_on_commit=settings.db.expire_on_commit
         )
 
     def get_scoped_session(self):

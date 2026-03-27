@@ -1,39 +1,37 @@
 from fastapi import FastAPI
 import uvicorn
-
-from App.endpoints import products
-
 from contextlib import asynccontextmanager
 
-from Core import core_config
+from Core import settings
 from DataBase import db_helper, models
+from App.endpoints import products_router
 
 
 @asynccontextmanager
-async def lifespan(app: FastAPI):
+async def lifespan(fastapi_app: FastAPI):
     async with db_helper.engine.begin() as conn:
         await conn.run_sync(models.Base.metadata.create_all)
 
-    print("uvicorn is starting...")
+    print("Uvicorn is starting...")
 
     yield
 
-    print("uvicorn is stopping...")
+    print("Uvicorn is stopping...")
 
 
-main_app = FastAPI(lifespan=lifespan)
-main_app.include_router(products, prefix="/api", tags=["Products"])
+app = FastAPI(lifespan=lifespan)
+app.include_router(products_router, prefix="/api", tags=["products"])
 
 
-@main_app.get("/ping", tags=["Main"])
+@app.get("/ping", tags=["main"])
 def get_ping():
-    return {"code": 200, "ping": True}
+    return {"ping": True}
 
 
 if __name__ == "__main__":
     uvicorn.run(
-        "main:main_app",
-        reload=core_config.api.reload,
-        host=core_config.api.host,
-        port=core_config.api.port,
+        "main:app",
+        reload=settings.api.reload,
+        host=settings.api.host,
+        port=settings.api.port,
     )

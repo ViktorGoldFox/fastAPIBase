@@ -1,3 +1,5 @@
-from Core import config
+from Core.config import settings
 
-core_config = config.Settings()
+all = [
+    "settings"
+]

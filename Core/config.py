@@ -16,3 +16,4 @@ class Settings(BaseSettings):
     api: ApiSetting = ApiSetting()
     db: DBSetting = DBSetting()
 
+settings = Settings()
